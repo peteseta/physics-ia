@@ -1,0 +1,31 @@
+murray:
+  author:
+    name: Murray
+    given-name: Chris
+  title: Musical String Inharmonicity
+  date: 2022-07-01
+  url:
+    value: https://pubs.aip.org/aapt/ajp/article-abstract/90/7/487/2820160/Inharmonicity-in-plucked-guitar-strings?redirectedFrom=fulltext
+    date: 2023-04-30
+  parent:
+    title: American Journal of Physics
+    volume: 90
+    issue: 7
+
+perov:
+  author:
+    - name: Perov, Polievkt
+    - name: Johnson, Walter
+    - name: Perova-Mello, Nataliia
+  title: The Physics of Guitar String Vibrations
+  date: 2016-01-01
+  page-range: 38-43
+  parent:
+    title: American Journal of Physics
+    volume: 84
+    issue: 1
+  issn: 0002-9505
+  doi: "10.1119/1.4935088"
+  url:
+    value: https://pubs.aip.org/ajp/article/84/1/38/1057044/The-physics-of-guitar-string-vibrations
+    date: 2023-06-07
