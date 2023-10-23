@@ -1,4 +1,4 @@
-#import "@preview/tablex:0.0.6": tablex, gridx, hlinex, vlinex, colspanx, rowspanx
+#import "@preview/tablex:0.0.6": tablex, gridx, hlinex, vlinex, colspanx, rowspanx, cellx
 #import "@preview/nth:0.2.0": nth
 
 // apa bibliography
@@ -224,7 +224,7 @@ plucked).
   to @variables_table.
 
 #align(center)[#smallcaps("Processing")]
-1. For each picking length $x_1$, calculate the average frequency $f$ with the
+14. For each picking length $x_1$, calculate the average frequency $f$ with the
   highest amplitude using a spreadsheet tool.
 + For each picking length $x_1$, calculate the average uncertainty in the
   frequency using $Delta f = (f_"max" - f_"min")/2$.
@@ -239,42 +239,230 @@ plucked).
   the windowed data using Welch's method. The fundamental is identified by looking
   for peaks around the expected frequency, allowing for variations in tuning.
 ]
-// explain how data was collected from
 
 == Safety, Ethical, and Environmental Considerations
 // none? maybe just justify why new strings aren't needed
-There are no major considerations necessary for this experiment; it is
-relatively safe. As the guitar is directly connected to the audio interface, any
-voltages are low and are not likely to pose a safety risk. There is no risk of
-water damage to any electronics. New strings are not required for the experiment
-and no consumable materials are used, limiting this experiment's environmental
-impacts.
+This is a relatively safe experiment. As the guitar is directly connected to the
+audio interface, any voltages are low and are not likely to pose a safety risk.
+There is no risk of water damage to any electronics. New strings are not
+required for the experiment and no consumable materials are used, limiting this
+experiment's environmental impacts.
 
 = Analysis
 
-== Raw Data
+== Raw Data - Time Domain
 // 1. raw from recording
 // Show one graph/table of data from MATLAB and explain how the highest amplitude harmonic frequency was selected (excerpt of...) - time domain to frequency domain
+// after FFT, which does bla bla bla, we get all the frequencies for trials and variations
 
-// 2. after FFT, which does bla bla bla, we get all the frequencies for trials and variations
+#figure(caption: "Example of frequency-domain data showing harmonic peaks", [
+  #image("figures/matlab_fft.png", width: 80%)
+]) <matlab_fft_figure>
+
+As an example, @matlab_fft_figure shows ...
+
+After FFT,
+
+// qualitative observations
+#align(center)[#smallcaps("Qualitative Observations")]
+It was observed that
+
+#pagebreak()
+== Raw Data - Frequency Domain
+// 2. after all the highest-amplitude harmonics are identified
 // Show raw data table of all selected frequencies across trials and variations
 // raw frequencies from FFT for all trials, for each picking length
 
+#let uncert(n) = str(calc.round((0.05 * 329.63 * n), digits: 2))
+
+#figure(
+  kind: table,
+  caption: "Raw data of highest amplitude harmonic frequencies at each plucking length",
+  tablex(
+    columns: 7,
+    auto-vlines: false,
+    inset: 10pt,
+    align: center + horizon,
+    repeat-header: true,
+    header-rows: 2,
+    rowspanx(2)[*Plucking length\ $x_1$ (m)* \ $Delta x_1 = ±0.005$m],
+    colspanx(6)[*Frequency with highest amplitude\ $f$ / $Delta f$ (Hz)*],
+    [Trial 1],
+    [Trial 2],
+    [Trial 3],
+    [Trial 4],
+    [Trial 5],
+    [$Delta f$],
+    // 0.01  655.70  655.88  655.88  655.88  655.88
+    // 0.08  655.70  655.88  655.88  655.88  655.88
+    // 0.15  655.88  655.88  655.88  656.07  655.88
+    // 0.22  656.07  655.88  655.88  656.07  656.07
+    // 0.29  984.01  983.83  984.01  984.01  984.01
+    // 0.36  656.07  984.01  655.88  655.88  655.88
+    // 0.43  655.88  656.07  655.88  655.88  655.88
+    // 0.50  655.88  655.88  655.88  655.88  655.88
+    // 0.57  656.07  655.88  655.88  655.88  655.88
+    // 0.64  655.88  656.07  656.07  655.88  656.07
+    [0.01],
+    [655.70],
+    [655.88],
+    [655.88],
+    [655.88],
+    [655.88],
+    [#uncert(2)],
+    [0.08],
+    [655.70],
+    [655.88],
+    [655.88],
+    [655.88],
+    [655.88],
+    [#uncert(2)],
+    [0.15],
+    [655.88],
+    [655.88],
+    [655.88],
+    [656.07],
+    [655.88],
+    [#uncert(2)],
+    [0.22],
+    [656.07],
+    [655.88],
+    [655.88],
+    [656.07],
+    [656.07],
+    [#uncert(2)],
+    [0.29],
+    [984.01],
+    [983.83],
+    [984.01],
+    [984.01],
+    [984.01],
+    [#uncert(3)],
+    [0.36],
+    [656.07],
+    [#text(fill: red, "984.01") #footnote("Outlier removed for processed data")],
+    [655.88],
+    [655.88],
+    [655.88],
+    [#uncert(2)],
+    [0.43],
+    [655.88],
+    [656.07],
+    [655.88],
+    [655.88],
+    [655.88],
+    [#uncert(2)],
+    [0.50],
+    [655.88],
+    [655.88],
+    [655.88],
+    [655.88],
+    [655.88],
+    [#uncert(2)],
+    [0.57],
+    [656.07],
+    [655.88],
+    [655.88],
+    [655.88],
+    [655.88],
+    [#uncert(2)],
+    [0.64],
+    [655.88],
+    [656.07],
+    [656.07],
+    [655.88],
+    [656.07],
+    [#uncert(2)],
+  ),
+) <raw_data_table>
 // justification of absolute uncertainties
 // tape measure - ± whatever cm = ± whatever m
 // frequency - ± whatever % from the search window of the FFT
 
-// qualitative observations
+#align(center)[#smallcaps("Absolute Uncertainties")]
+- The absolute uncertainty in the picking length $x_1$ is $Delta x_1 = ±0.005 "m"$ as
+  the tape measure has a precision of $1 "cm"$.
+- The absolute uncertainty in the frequency $f$ is $ Delta f = ±n times 0.05f_1 = ±n times 16.48"Hz" $
+  as the frequency search window in the FFT is $5%$ of the expected fundamental
+  frequency $f_1 = 329.63"Hz"$. This uncertainty is multiplied by $n$ because it
+  propagates when the non-fundamental harmonic is calculated by multiplying the
+  fundamental frequency by the harmonic number $n$. For instance, plucking length $x_1 = 0.01$m
+  results in the 2nd harmonic with the highest amplitude, so regardless of the
+  FFT-found fundamental frequency, the absolute uncertainty is $Delta f = ±2 times 16.48 = ±32.96"Hz"$.
 
+#pagebreak()
 == Processed Data
 // processed data - average frequencies across trials, for each picking length
+#figure(
+  kind: table,
+  caption: "Raw data of highest amplitude harmonic frequencies at each plucking length",
+  tablex(
+    columns: 3,
+    auto-vlines: false,
+    inset: 10pt,
+    align: center + horizon,
+    repeat-header: true,
+    header-rows: 2,
+    [*Plucking length\ $x_1$ (m)* \ $Delta x_1 = ±0.005$m],
+    [*Average frequency with highest amplitude\ $macron(f)$ (Hz)*],
+    [Uncertainty in $macron(f)$ \ $Delta macron(f)$ (Hz)],
+    // 0.01  655.85  32.96
+    // 0.08  655.85  32.96
+    // 0.15  655.92  32.96
+    // 0.22  655.99  32.96
+    // 0.29  983.97  49.44
+    // 0.36  655.93  32.96
+    // 0.43  655.92  32.96
+    // 0.50  655.88  32.96
+    // 0.57  655.92  32.96
+    // 0.64  655.99  32.96
+    [0.01],
+    [655.85],
+    [32.96],
+    [0.08],
+    [655.85],
+    [32.96],
+    [0.15],
+    [655.92],
+    [32.96],
+    [0.22],
+    [655.99],
+    [32.96],
+    [0.29],
+    [983.97],
+    [49.44],
+    [0.36],
+    [655.93],
+    [32.96],
+    [0.43],
+    [655.92],
+    [32.96],
+    [0.50],
+    [655.88],
+    [32.96],
+    [0.57],
+    [655.92],
+    [32.96],
+    [0.64],
+    [655.99],
+    [32.96],
+  ),
+) <processed_data_table>
 
+#align(center)[#smallcaps("Calculations")]
 // Example calculation of averaging
-
-=== Uncertainties
-// average uncertainty
+// Calculation of average uncertainty
 // range or standard deviation of trials
+- The average frequency with the highest amplitude $macron(f)$ was calculated by
+  averaging the frequencies with the highest amplitude across trials, for each
+  variation of the picking length $x_1$. For example, for $x_1 = 0.01 "m"$, the
+  average frequency $macron(f)$ is
+  $ macron(f) = 1/5 sum_(n=0)^5 (f_(x_1 = 0.01, "trial" n)) \ = 1/5 (655.70 + 655.88 + 655.88 + 655.88 + 655.88) \ = 655.85 "Hz" $
+- Because the uncertainties are not from random error between trials but the FFT
+  process, the absolute uncertainty is used, from @raw_data_table. For instance,
+  the absolute uncertainty for picking length $x_1 = 0.01$m is 32.96Hz, so $Delta macron(f) = 32.96$Hz.
 
+#pagebreak()
 == Graphical Analysis
 // graph of average
 
