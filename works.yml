@@ -14,9 +14,12 @@ murray:
 
 perov:
   author:
-    - name: Perov, Polievkt
-    - name: Johnson, Walter
-    - name: Perova-Mello, Nataliia
+    - name: Perov
+      given-name: Polievkt
+    - name: Johnson
+      given-name: Walter
+    - name: Perova-Mello
+      given-name: Nataliia
   title: The Physics of Guitar String Vibrations
   date: 2016-01-01
   page-range: 38-43
@@ -29,3 +32,17 @@ perov:
   url:
     value: https://pubs.aip.org/ajp/article/84/1/38/1057044/The-physics-of-guitar-string-vibrations
     date: 2023-06-07
+
+tsokos:
+  type: Book
+  author:
+    name: Tsokos
+    given-name: K. Andreas
+  title: Physics for the IB Diploma Coursebook
+  parent:
+    title: Cambridge University Press
+  date: 2014
+  isbn: 978-1107628199
+  url: 
+    value: https://tsokosphysics.com/
+    date: 2023-10-22
