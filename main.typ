@@ -176,7 +176,7 @@ with a peak around the middle of the fretboard ($x_1 = L/2$).
       Nickel XSE0942 Super Light Coated Electric Guitar Strings_ model used)
     - 1 audio interface with instrument input (_Audient EVO4_ used)
     - 1 instrument cable
-    - 1 Computer with audio analysis software (_MATLAB_ used)
+    - 1 Computer with audio analysis and spreadsheet software (_MATLAB_ and _Google Sheets_ used)
     - 1 tape measure
     - 1 clamp stand
     - Masking tape
@@ -208,24 +208,37 @@ plucked).
 
 #align(center)[#smallcaps("Recording and analysis")]
 5. Start the 5-second recording on the computer.
-+ At the first variation of $x_1$ (see @variables_table), pluck the 1st string
-  using the pick at a 45º angle to the fretboard, touching the pick to the
-  fretboard and pushing towards the string perpendicularly.
++ At the first variation of $x_1$, pluck the 1st string using the pick at a 45º
+  angle to the fretboard, touching the pick to the fretboard and pushing towards
+  the string perpendicularly.
 + Wait for the recording period to end and ensure the data is saved.
 + Using the frequency analysis software, convert the time-domain data into
   frequency-domain data.
-+ Identify the true fundamental frequency by searching for a peak within 5% of the
-  expected fundamental frequency $f_1 = 329.63 "Hz"$
-+ Repeat steps 5–7 four more times to complete five trials for the variation.
-+
++ Identify the true fundamental frequency by searching for a peak in the data
+  within 5% of the expected fundamental frequency $f_1 = 329.63 "Hz"$
++ Calculate the frequency of each non-fundamental harmonic $n$ for $n=2...10$
++ Calculate the absolute amplitude $|b_n|$ for the frequency at each harmonic,
+  recording the frequency $f_n$ that maximizes the absolute amplitude $|b_n|$.
++ Repeat steps 5–11 four more times to complete five trials for the variation.
++ Repeat steps 5–12 for the remaining variations, modifying the picking length $x_1$ according
+  to @variables_table.
 
 #align(center)[#smallcaps("Processing")]
-8.
-+ Repeat steps x to x for the remaining variations of picking length $x_1$.
+1. For each picking length $x_1$, calculate the average frequency $f$ with the
+  highest amplitude using a spreadsheet tool.
++ For each picking length $x_1$, calculate the average uncertainty in the
+  frequency using $Delta f = (f_"max" - f_"min")/2$.
 
-In data collection, steps 8-x were automated using a custom MATLAB (scientific
-programming platform) program.
-
+#rect(
+  fill: luma(245),
+  inset: 12pt,
+)[
+  In data collection, steps 8-11 were automated using a custom MATLAB (scientific
+  programming platform) program. The program applies a Hann window to the recorded
+  audio data to reduce noise interference and computes the Fourier transform of
+  the windowed data using Welch's method. The fundamental is identified by looking
+  for peaks around the expected frequency, allowing for variations in tuning.
+]
 // explain how data was collected from
 
 == Safety, Ethical, and Environmental Considerations
