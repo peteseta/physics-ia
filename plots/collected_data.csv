@@ -1,11 +1,11 @@
-Picking Length L (m),Average frequency with highest intensity (Hz)
-0.01,655.85
-0.08,655.85
-0.15,655.92
-0.22,655.99
-0.29,983.97
-0.36,655.93
-0.43,655.92
-0.50,655.88
-0.57,655.92
-0.64,655.99
+Picking Length L (m),Uncertainty in picking length,Average frequency with highest intensity (Hz),Uncertainty in average frequency with highest intensity
+0.01,0.005,655.85,32.96
+0.08,0.005,655.85,32.96
+0.15,0.005,655.92,32.96
+0.22,0.005,655.99,32.96
+0.29,0.005,983.97,49.44
+0.36,0.005,655.93,32.96
+0.43,0.005,655.92,32.96
+0.50,0.005,655.88,32.96
+0.57,0.005,655.92,32.96
+0.64,0.005,655.99,32.96
