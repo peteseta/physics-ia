@@ -57,7 +57,7 @@ tension is plucked?_
 
 #figure(
   image("figures/guitar_string.png", width: 70%),
-  caption: [A guitar string of length $L$ pulled a distance $A$ at position $x_1$],
+  caption: [A guitar string of length $L$ pulled a distance $A$ at position $x_1$ #r.perov],
 ) <string_pluck_fig>
 
 A guitar string is a string with two fixed ends. When the string is plucked (as
@@ -110,7 +110,6 @@ with a peak around the middle of the fretboard ($x_1 = L/2$).
 
 #pagebreak()
 = Methodology
-
 == Variables
 // table of variables
 
@@ -240,7 +239,7 @@ plucked).
   program. The program applies a Hann window to the recorded audio data to reduce
   noise interference and computes the Fourier transform of the windowed data using
   Welch's method. The fundamental is identified by looking for peaks around the
-  expected frequency, allowing for variations in tuning.
+  expected frequency, allowing for variations in tuning #r.matlab.
 ]
 
 == Safety, Ethical, and Environmental Considerations
@@ -253,7 +252,6 @@ experiment's environmental impacts.
 
 #pagebreak()
 = Analysis
-
 == Raw Data - Time-Domain
 // 1. raw from recording
 // Show one graph/table of data from MATLAB and explain how the highest amplitude harmonic frequency was selected (excerpt of...) - time domain to frequency domain
@@ -418,9 +416,9 @@ Each harmonic frequency is represented by a peak in the data and is marked #sym.
     align: center + horizon,
     repeat-header: true,
     header-rows: 2,
-    [*Plucking length\ $x_1$ (m)* \ $Delta x_1 = ±0.005$m],
-    [*Average frequency with highest amplitude\ $macron(f)$ (Hz)*],
-    [Uncertainty in $macron(f)$ \ $Delta macron(f)$ (Hz)],
+    [*Plucking length* \ $x_1$ (m) \ $Delta x_1 = ±0.005$m],
+    [*Average frequency with highest amplitude* \ $macron(f)$ (Hz)],
+    [*Uncertainty in $macron(f)$* \ $Delta macron(f)$ (Hz)],
     // 0.01  655.85  32.96
     // 0.08  655.85  32.96
     // 0.15  655.92  32.96
@@ -473,9 +471,11 @@ Each harmonic frequency is represented by a peak in the data and is marked #sym.
   variation of the picking length $x_1$. For example, for $x_1 = 0.01 "m"$, the
   average frequency $macron(f)$ is
   $ macron(f) = 1/5 sum_(n=0)^5 (f_(x_1 = 0.01, "trial" n)) \ = 1/5 (655.70 + 655.88 + 655.88 + 655.88 + 655.88) \ = 655.85 "Hz" $
-- Because the uncertainties are not from random error between trials but the FFT
-  process, the absolute uncertainty is used as in @raw_data_table. For instance,
-  the absolute uncertainty for picking length $x_1 = 0.01$m is 32.96Hz, so $Delta macron(f) = 32.96$Hz.
+- The uncertainties are due to systematic error from the FFT process rather than
+  random error between trials, therefore the absolute uncertainties are used as in
+  @raw_data_table as opposed to $Delta macron(f) = (f_"max" - f_"min") / 2$. For
+  instance, the absolute uncertainty for picking length $x_1 = 0.01$m is 32.96Hz,
+  so $Delta macron(f) = 32.96$Hz.
 
 #pagebreak()
 == Graphical Analysis
@@ -508,8 +508,7 @@ against the theoretical data, as shown in @comparison_data_table and
 
 #figure(
   kind: table,
-  caption: [Comparison between $macron(f)_"actual"$ and $macron(f)_"modeled"$ with Gaussian
-    trendline],
+  caption: [Comparison between $macron(f)_"actual"$ and $f_"modeled"$],
   tablex(
     columns: 4,
     auto-vlines: false,
@@ -518,9 +517,9 @@ against the theoretical data, as shown in @comparison_data_table and
     repeat-header: true,
     header-rows: 2,
     [*Plucking length\ $x_1$ (m)* \ $Delta x_1 = ±0.005$m],
-    [*Measured average frequency with highest amplitude\ $macron(f)_"actual"$ (Hz)*],
-    [*Theoretical average frequency with highest intensity\ $macron(f)_"modeled"$ (Hz)*],
-    [Percentage difference between $macron(f)_"actual"$ \ and $macron(f)_"modeled"$ \ $Delta %$],
+    [*Measured average frequency with highest amplitude* \ $macron(f)_"actual"$ (Hz)],
+    [*Theoretical average frequency with highest intensity* \ $f_"modeled"$ (Hz)],
+    [*Percentage difference between $macron(f)_"actual"$ and $f_"modeled"$* \ $Delta %$],
     // 0.01  655.85  659.26  -0.52%
     // 0.08  655.85  659.26  -0.52%
     // 0.15  655.92  659.26  -0.51%
@@ -578,7 +577,7 @@ against the theoretical data, as shown in @comparison_data_table and
 Overall, there is a low average percentage difference between the average
 frequency from the experiment and the theoretical value. The average percentage
 difference is -0.51%, an acceptable error, and is within the 5% margin of error
-from the FFT process.
+from the FFT process
 
 // systematic error between collected data and model data
 This percentage difference is roughly constant across variations with the
@@ -587,7 +586,7 @@ suggesting that there is a source of systematic error. This can likely be
 attributed to discrepancies in tuning of the guitar string.
 
 #figure(
-  caption: [Comparison between $macron(f)_"actual"$ and $macron(f)_"modeled"$ with Gaussian
+  caption: [Comparison between $macron(f)_"actual"$ and $f_"modeled"$ with Gaussian
     trendline],
   [
     #image("figures/comparison.png", width: 100%)
@@ -709,14 +708,15 @@ variables may be explored. For instance:
   nylon, copper, or steel strings, to see how each string material affects the
   harmonic composition of the sound (the non-fundamental harmonic frequency with
   the highest amplitude).\
-  *IV*: material/type of string\
-  *DV*: non-fundamental harmonic frequency with the highest amplitude
+  #sym.arrow *IV*: material/type of string\
+  #sym.arrow *DV*: non-fundamental harmonic frequency with the highest amplitude
 
 - The experiment could be repeated with different types of guitar pickups, such as
   single-coil and humbucker pickups, to see the effect of each pickup's frequency
   response, and how it affects the harmonic composition of the sound.\
-  *IV*: type of pickup (single-coil, humbucker, mix, active/passive pickups, etc.)\
-  *DV*: non-fundamental harmonic frequency with the highest amplitude
+  #sym.arrow *IV*: type of pickup (single-coil, humbucker, mix, active/passive
+  pickups, etc.)\
+  #sym.arrow *DV*: non-fundamental harmonic frequency with the highest amplitude
 
 = References
 #bibliography <bibliography>

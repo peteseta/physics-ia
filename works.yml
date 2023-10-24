@@ -46,3 +46,13 @@ tsokos:
   url: 
     value: https://tsokosphysics.com/
     date: 2023-10-22
+
+matlab:
+  type: Website
+  author:
+    name: MathWorks
+  title: pwelch - Welch's power spectral density estimate
+  date: 2023-09-01
+  url:
+    value: https://www.mathworks.com/help/signal/ref/pwelch.html
+    date: 2023-09-08
