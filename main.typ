@@ -490,14 +490,14 @@ Each harmonic frequency is represented by a peak in the data and is marked #sym.
 // briefly comment on graph: clear peak at 0.29m
 Graphing the processed data, there is a clear peak at the data point (0.29,
 983.97), while every other data point has a y-value around 655Hz ± 1Hz. The
-error bars are quite large, around ±30–50Hz, however this does not impair the
+error bars are quite large, around ±30–50Hz, however, this does not impair the
 clear peak at 0.29m.
 
 // comment on error bars - quite large but still acceptable and shows the peak at 29.
 
 The graph cannot be linearized within the scope of the IA due to requiring
-Taylor series approximations. Therefore, the data will be compared to the
-theoretical simulation data, to which a Gaussian function is fitted.
+Taylor series approximations #r.taylor. Therefore, the data will be compared to
+the theoretical simulation data, to which a Gaussian function is fitted.
 
 == Comparison with Theoretical Data
 Using the process outlined in @background_information, the theoretical harmonic

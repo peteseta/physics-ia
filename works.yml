@@ -45,7 +45,7 @@ tsokos:
   isbn: 978-1107628199
   url: 
     value: https://tsokosphysics.com/
-    date: 2023-10-22
+    date: 2023-10-11
 
 matlab:
   type: Website
@@ -56,3 +56,24 @@ matlab:
   url:
     value: https://www.mathworks.com/help/signal/ref/pwelch.html
     date: 2023-09-08
+  
+taylor:
+  type: Article
+  author:
+    - name: Ratkowsky
+      given-name: D. A.
+    - name: Dolby
+      given-name: G. R.
+  title: Taylor Series Linearization and Scoring for Parameters in Nonlinear Regression
+  date: 1975-03-01
+  page-range: 109-122
+  parent:
+    title: Journal of the Royal Statistical Society. Series C (Applied Statistics)
+    volume: 24
+  doi: "10.2307/2346709"
+  url:
+    value: https://www.jstor.org/stable/2346709
+    date: 2023-10-22
+
+
+    
