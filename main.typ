@@ -1,17 +1,7 @@
 #import "@preview/tablex:0.0.6": tablex, gridx, hlinex, vlinex, colspanx, rowspanx, cellx
 #import "@preview/nth:0.2.0": nth
 
-// apa bibliography
-#import "packages/apa-bibliography/0.0.1/lib.typ": *
-
-#let (
-  reference: r,
-  reference-with-page: rp,
-  reference-date-only: rd,
-  bibliography,
-) = apa-bibliography(yaml("works.yml"))
-
-#set page(paper: "a4", numbering: "1", number-align: top + right, margin: 1.00in)
+#set page(paper: "a4", numbering: "1", number-align: top + right, margin: 0.80in)
 #show heading: set block(above: 2em, below: 1em)
 #show heading: set text()
 #set par(
@@ -41,31 +31,32 @@ In guitar, tone control is a major technical skill. Each musical instrument's
 quality of sound—its timbre—is differentiated by the varying composition of
 harmonic frequencies $f_n$ which are present in addition to the fundamental
 frequency $f_1$. In addition to the fundamental variation between instruments,
-the timbre also varies based on how notes are played #r.perov. It is
-qualitatively observed that plucking near the bridge will create a harsher,
-“tinny” sound while plucking toward the bridge will create a fuller sound.
+the timbre also varies based on how notes are played
+@tsokosPhysicsIBDiploma2014. It is qualitatively observed that plucking near the
+bridge will create a harsher, “tinny” sound while plucking toward the bridge
+will create a fuller sound.
 
-This investigation will explore how the quality of sound may change depending on
-where the string is plucked. The research question I have decided to investigate
-is: _How does changing the position of the plectrum along a guitar scale affect the
-frequency of the harmonic with the highest intensity when a string with constant
-tension is plucked?_
+This investigation will explore how the quality of sound as measured by the
+output signal may change depending on where the string is plucked. The research
+question I have decided to investigate is: _How does changing the position of the plectrum along a guitar's scale length
+affect the frequency of the harmonic with the highest intensity when a string
+with constant tension is plucked?_
 
 == Background <background_information>
 // standing waves - guitar string is a string with two fixed ends
 // perov2016 paper
 
 #figure(
-  image("figures/guitar_string.png", width: 70%),
-  caption: [A guitar string of length $L$ pulled a distance $A$ at position $x_1$ #r.perov],
-) <string_pluck_fig>
+  image("figures/guitar_acc.png", width: 50%),
+  caption: [Standing waves on a guitar string @novakStandingWavesWhat],
+) <guitar_fig>
 
-A guitar string is a string with two fixed ends. When the string is plucked (as
-in @string_pluck_fig), a transverse wave is initiated that propagates along the
-length of the string. The reflection of the transverse wave at the fixed ends
-superimposes with the original wave, forming nodes (points of zero displacement)
-and antinodes (points of maximum displacement). This creates a standing wave,
-which is a wave that does not propagate but rather oscillates in place #r.tsokos.
+A guitar string is a string with two fixed ends. When the string is plucked, a
+transverse wave is initiated that propagates along the length of the string. The
+reflection of the transverse wave at the fixed ends superimposes with the
+original wave, forming nodes (points of zero displacement) and antinodes (points
+of maximum displacement). This creates a standing wave, which is a wave that
+does not propagate but rather oscillates in place @tsokosPhysicsIBDiploma2014.
 
 The first harmonic is a standing wave with a single loop made of two nodes and
 one antinode, which results in a sound wave at the fundamental frequency, given
@@ -85,62 +76,87 @@ quantization), given by $ f_n = n f_1 $ <freq_integer>
 
 These individual waveforms superimpose linearly to form a composite waveform
 which is the sum of all individual harmonic waveforms. As a result, the sound
-emitted by a guitar string is a mixture of multiple harmonic frequencies.
+emitted by a guitar string is a mixture of multiple harmonic frequencies, as in
+@guitar_fig.
+
+#figure(
+  image("figures/guitar_string.png", width: 70%),
+  caption: [A guitar string of length $L$ pulled a distance $A$ at position $x_1$ @perovPhysicsGuitarString2016],
+) <string_pluck_fig>
 
 To investigate how the picking length affects the harmonic with the highest
 amplitude, we must determine the variation of the amplitude of each harmonic
 frequency separately. The amplitude $b_n$ of the $n$th harmonic is given by the
 equation
 $ b_n = (2 A sin(n pi x_1 / L)) / (x_1 / L (1-x_1 / L) pi^2 n^2) $ <amplitude_eq>
-where $A$ is the distance the string is pulled when plucked and $L$ is the
-string length #r.perov.
+where:
+- $x_1$ is the picking position/distance from the nut
+- $A$ is the distance the string is pulled when plucked
+- $L$ is the string length
+
+The variation in amplitude thus depends on the harmonic $n$, like so:
+
+#figure(
+  image("figures/perov_variations.png", width: 80%),
+  caption: [Variation of the amplitude $b_n$ for $n=2$ through $n=5$ with the picking length $x_1/L$ (ratio
+    of picking position to string length $L$) @perovPhysicsGuitarString2016],
+)
 
 By calculating $b_n$ (@amplitude_eq) for $n=2...10$ at each variation of $x_1$ and
 choosing the value of $n$ that maximizes $b_n$, the non-fundamental harmonic
-frequency with the highest amplitude can be calculated using @freq_integer.
+frequency with the highest amplitude can be calculated using @freq_integer. The
+fundamental frequency $f_1$ is known to be $f_1 = 329.63 "Hz"$.
 
 Plotting the picking length $x_1$ against the non-fundamental harmonic frequency
 with the highest amplitude $f$ results in a Gaussian-like function where the #nth(2) harmonic
 has the highest amplitude across picking lengths, except near the middle of the
-fretboard where the #nth(3) harmonic has the highest amplitude.
+fretboard where the #nth(3) harmonic has the highest amplitude. This is shown in
+@model_fig.
+
+#figure(
+  image("figures/model_fit.png", width: 100%),
+  caption: [Theoretical gaussian trend of the variation of the non-fundamental harmonic
+    frequency with the highest amplitude across picking lengths $x_1$],
+) <model_fig>
 
 Therefore, it is hypothesized that the non-fundamental harmonic frequency with
 the highest amplitude will remain constant across picking lengths $x_1$, except
 with a peak around the middle of the fretboard ($x_1 = L/2$).
 
-#pagebreak()
 = Methodology
-== Variables
-// table of variables
+== Variables <variables>
+
+*Independant Variable* \
+Picking length $x_1$ (m), the distance in meters from the nut where the string
+is disturbed
+- $x_1$ = {0.01m, 0.08m, 0.15m, 0.22m, 0.29m, 0.36m, 0.43m, 0.50m, 0.57m, 0.64m}
+- The variations are chosen to be evenly spaced across the guitar's scale length
+  (the distance between the nut and the bridge), which is 0.64m.
+- The IV is varied by plucking at the picking length as indicated by a tape
+  measure.
+
+*Dependant Variable* \
+Frequency $f$ of the non-fundamental harmonic with the highest amplitude (Hz)
+- Measured by recording the frequency $f_n$ of the $n$th harmonic that has the
+  highest amplitude through FFT (Fast Fourier Transform) analysis, where $n=2...10$.
+- This DV was chosen because the highest intensity harmonic has a significant
+  impact on the quality/timbre of sound related as it is the most harmonic that is
+  most audible.
 
 #figure(
   kind: table,
-  caption: "Variables",
+  caption: "Controlled Variables",
   [
     #tablex(
-      columns: (7em, 14em, auto),
-      auto-vlines: false,
+      columns: (8em, 14em, auto),
+      stroke: 0.5pt,
       inset: 10pt,
       align: center + horizon,
       repeat-header: true,
       header-rows: 1,
-      [*Type*],
-      // vlinex(),
-      [*Variable*],
+      [*Control*],
+      [*Reason*],
       [*Specification*],
-      [Independant \ Variable],
-      [Picking length $x_1$ (m), the distance in meters from the nut where the string
-        is disturbed],
-      [$x_1$ = {0.01m, 0.08m, 0.15m, 0.22m, 0.29m, 0.36m, 0.43m, 0.50m, 0.57m, 0.64m},
-        varied by plucking at the picking length as indicated by a tape measure],
-      [Dependant \ Variable],
-      [Frequency $f$ of the non-fundamental harmonic with the highest amplitude (Hz)],
-      [Measured by recording the frequency $f_n$ of the $n$th harmonic that has the
-        highest amplitude through FFT (Fast Fourier Transform) analysis, where $n=2...10$],
-      colspanx(3)[*Controlled Variables*],
-      [Control],
-      [Reason],
-      [Specification],
       [Diameter, tension, age, and other material properties of the string],
       [Different material properties of the string may change its harmonic composition.],
       [The same high E string tuned to the standard $E = 329.63 "Hz"$ will be used for
@@ -157,7 +173,7 @@ with a peak around the middle of the fretboard ($x_1 = L/2$).
         angle to the fretboard, with the tip of the pick contacting the fretboard.],
     )
   ],
-) <variables_table>
+) <cv_table>
 
 // === Pilot Study
 // perov2016 paper influence methodology
@@ -173,9 +189,9 @@ with a peak around the middle of the fretboard ($x_1 = L/2$).
     2,
     gutter: 4pt,
   )[
-    - Electric guitar (6-string _Kiesel Guitars "Osiris"_ model used)
-    - 1 set of $0.009 - 0.042$mm gauge nylon electric guitar strings (_D'Addario XS
-      Nickel XSE0942 Super Light Coated Electric Guitar Strings_ model used)
+    - Electric guitar (6-string "Kiesel Guitars Osiris" used) with $0.009$mm gauge
+      nylon electric guitar string ("D'Addario XS Nickel XSE0942 Super Light Coated
+      Electric Guitar Strings" used)
     - 1 audio interface with instrument input (_Audient EVO4_ used)
     - 1 instrument cable
     - 1 Computer with audio analysis and spreadsheet software (_MATLAB_ and _Google Sheets_ used)
@@ -223,7 +239,7 @@ plucked).
   recording the frequency $f_n$ that maximizes the absolute amplitude $|b_n|$.
 + Repeat steps 5–11 four more times to complete five trials for the variation.
 + Repeat steps 5–12 for the remaining variations, modifying the picking length $x_1$ according
-  to @variables_table.
+  to @variables.
 
 // #align(center)[#smallcaps("Processing")]
 // 14. For each picking length $x_1$, calculate the average frequency $f$ with the
@@ -239,7 +255,8 @@ plucked).
   program. The program applies a Hann window to the recorded audio data to reduce
   noise interference and computes the Fourier transform of the windowed data using
   Welch's method. The fundamental is identified by looking for peaks around the
-  expected frequency, allowing for variations in tuning #r.matlab.
+  expected frequency, allowing for variations in tuning
+  @mathworksWelchPowerSpectral2023.
 ]
 
 == Safety, Ethical, and Environmental Considerations
@@ -496,8 +513,9 @@ clear peak at 0.29m.
 // comment on error bars - quite large but still acceptable and shows the peak at 29.
 
 The graph cannot be linearized within the scope of the IA due to requiring
-Taylor series approximations #r.taylor. Therefore, the data will be compared to
-the theoretical simulation data, to which a Gaussian function is fitted.
+Taylor series approximations @ratkowskyTaylorSeriesLinearization1975. Therefore,
+the data will be compared to the theoretical simulation data, to which a
+Gaussian function is fitted.
 
 == Comparison with Theoretical Data
 Using the process outlined in @background_information, the theoretical harmonic
@@ -665,7 +683,7 @@ guitar tuner.
   caption: [Limitations of the design of the experiment],
   tablex(
     columns: (auto, auto, 13em),
-    auto-vlines: false,
+    stroke: 0.5pt,
     inset: 10pt,
     align: center + horizon,
     repeat-header: true,
@@ -694,6 +712,8 @@ guitar tuner.
   ),
 ) <limitations_table>
 
+assumed A in equation to be 1
+
 #pagebreak()
 == Further Study
 // quickly conclude again - this RQ was answered.
@@ -718,5 +738,4 @@ variables may be explored. For instance:
   pickups, etc.)\
   #sym.arrow *DV*: non-fundamental harmonic frequency with the highest amplitude
 
-= References
-#bibliography <bibliography>
+#bibliography("Physics IA.bib", style: "apa") <bibliography>
