@@ -16,6 +16,7 @@
 #set heading(numbering: "1.1 ")
 #set math.equation(numbering: "(1)")
 #set text(font: "New Computer Modern", lang: "en")
+// #show figure: set figure.caption(position: top)
 // #set text(font: "MLMRoman12", lang: "en")
 
 = Introduction
@@ -38,9 +39,9 @@ will create a fuller sound.
 
 This investigation will explore how the quality of sound as measured by the
 output signal may change depending on where the string is plucked. The research
-question I have decided to investigate is: _How does changing the position of the plectrum along a guitar's scale length
-affect the frequency of the harmonic with the highest intensity when a string
-with constant tension is plucked?_
+question I have decided to investigate is: _How does changing the position of the plectrum along a guitar's fretboard affect
+the frequency of the harmonic with the highest intensity when a string with
+constant tension is plucked?_
 
 == Background <background_information>
 // standing waves - guitar string is a string with two fixed ends
@@ -68,31 +69,32 @@ The linear principle of superposition states that the net displacement of a
 system subjected to multiple independent disturbances (waves, in this case) is
 the algebraic sum of the displacements due to each disturbance. If $y_1(x,t)$ and $y_2(x,t)$ are
 two waveforms propagating along the same string, then the net waveform $y(x,t)$ is
-given by the equation
-$ y(x,t) = y_1(x,t) + y_2(x,t) $
+given by the equation $y(x,t) = y_1(x,t) + y_2(x,t)$.
 
 Due to this principle, multiple, independent standing waves are formed on the
 guitar string, which results in higher-order harmonics. Each subsequent harmonic
 is an integer multiple of the fundamental frequency (known as frequency
 quantization), given by $ f_n = n f_1 $ <freq_integer>
 
+where $n$ is the harmonic number.
+
 These individual waveforms superimpose linearly to form a composite waveform
 which is the sum of all individual harmonic waveforms. As a result, the sound
 emitted by a guitar string is a mixture of multiple harmonic frequencies, as in
 @guitar_fig.
 
+=== Theoretical Model <model_background>
 #figure(
-  image("figures/guitar_string.png", width: 70%),
+  image("figures/guitar_string.png", width: 60%),
   caption: [A guitar string of length $L$ pulled a distance $A$ at position $x_1$ @perovPhysicsGuitarString2016],
 ) <string_pluck_fig>
 
-=== Theoretical Model <model_background>
-
 To investigate how the picking length affects the harmonic with the highest
 amplitude, we must determine the variation of the amplitude of each harmonic
-frequency separately. The amplitude $b_n$ of the $n$th harmonic is given by the
-equation
-$ b_n = (2 A sin(n pi x_1 / L)) / (x_1 / L (1-x_1 / L) pi^2 n^2) $ <amplitude_eq>
+frequency separately.
+
+The amplitude $b_n$ of the $n$th harmonic is given by the equation $ b_n = (2 A sin(n pi x_1 / L)) / (x_1 / L (1-x_1 / L) pi^2 n^2) $ <amplitude_eq>
+
 where:
 - $x_1$ is the picking position/distance from the nut
 - $A$ is the distance the string is pulled when plucked
@@ -101,8 +103,8 @@ where:
 The variation in amplitude thus depends on the harmonic $n$, like so:
 
 #figure(
-  image("figures/perov_variations.png", width: 80%),
-  caption: [Variation of the amplitude $b_n$ for $n=2$ through $n=5$ with the picking length $x_1/L$ (ratio
+  image("figures/perov_variations_flat.png", width: 100%),
+  caption: [Variation of the amplitude $b_n$ for $n=2$ through $n=5$ with the picking length $x_1/L$ \ (ratio
     of picking position to string length $L$) @perovPhysicsGuitarString2016],
 )
 
@@ -114,11 +116,29 @@ frequency $f_1$ is known to be $f_1 = 329.63 "Hz"$.
 Plotting the picking length $x_1$ against the non-fundamental harmonic frequency
 with the highest amplitude $f$ results in a Gaussian-like function where the #nth(2) harmonic
 has the highest amplitude across picking lengths, except near the middle of the
-fretboard where the #nth(3) harmonic has the highest amplitude. This is shown in
-@model_fig, with a Gaussian trendline fitted to the datapoints.
+fretboard where the #nth(3) harmonic has the highest amplitude.
+
+This is shown in @model_fig, with a Gaussian trendline fitted to the data
+points, in the form
+
+$ y = A times e^(-(x - B)^2 / (C^2)) + D $
+
+where:
+- $A = 329.63$ representing the amplitude of the peak above the baseline. This is
+  equal to the fundamental frequency $f_1$ because the peak (#nth(3) harmonic) is
+  one harmonic above the baseline (#nth(2) harmonic).
+- $B = 0.29$ representing the picking length where the peak occurs.
+- $C = 0.026$ representing the width of the peak (as chosen by the curve fitting
+  algorithm).
+- $D = 659.26$ representing the baseline frequency, which is the frequency of the
+  #nth(2) harmonic.
+
+resulting in the trendline
+
+$ y = 329.63 times e^(-(x - 0.29)^2/(0.026^2)) + 659.26 $
 
 #figure(
-  image("figures/model_fit.png", width: 100%),
+  image("figures/model_fit.png", width: 80%),
   caption: [Theoretical Gaussian trend of the variation of the non-fundamental harmonic
     frequency with the highest amplitude across picking lengths $x_1$],
 ) <model_fig>
@@ -134,8 +154,10 @@ with a peak around the middle of the fretboard ($x_1 = L/2$).
 Picking length $x_1$ (m), the distance in meters from the nut where the string
 is disturbed
 - $x_1$ = {0.01m, 0.08m, 0.15m, 0.22m, 0.29m, 0.36m, 0.43m, 0.50m, 0.57m, 0.64m}
-- The variations are chosen to be evenly spaced across the guitar's scale length
-  (the distance between the nut and the bridge), which is 0.64m.
+- The variations are chosen to be evenly spaced across the guitar's
+  fretboard/scale length (the distance between the nut and the bridge), which is
+  0.64m. This will allow the RQ to be investigated across the entire fretboard,
+  and mirrors the methodology of #cite(<perovPhysicsGuitarString2016>, form: "prose").
 - The IV is varied by plucking at the picking length as indicated by a tape
   measure.
 
@@ -146,6 +168,7 @@ Frequency $f$ of the non-fundamental harmonic with the highest amplitude (Hz)
 - This DV was chosen because the highest intensity harmonic—the harmonic that is
   most audible—has a significant impact on the quality/timbre of sound.
 
+#pagebreak()
 *Controlled Variables*
 #figure(
   kind: table,
@@ -259,7 +282,7 @@ plucked).
     custom MATLAB program.
 
     #figure(caption: "Example of frequency-domain data showing harmonic peaks", [
-      #image("figures/matlab_fft.png", width: 80%)
+      #image("figures/matlab_fft_old.png", width: 80%)
     ]) <matlab_fft_figure>
 
     As an example, @matlab_fft_figure shows an example of the resulting
@@ -285,8 +308,8 @@ plucked).
 This is a relatively safe experiment. As the guitar is directly connected to the
 audio interface, any voltages are low and are not likely to pose a safety risk.
 There is no risk of water damage to any electronics. New strings are not
-required for the experiment and no consumable materials are used, limiting this
-experiment's environmental impacts.
+required for the experiment and no consumable materials apart from masking tape
+are used, limiting this experiment's environmental impacts.
 
 = Analysis
 == Raw Data - Frequency-Domain
@@ -300,117 +323,95 @@ experiment's environmental impacts.
   kind: table,
   caption: "Raw data of highest amplitude harmonic frequencies at each plucking length",
   tablex(
-    columns: 7,
+    columns: 6,
     stroke: 0.5pt,
     inset: 10pt,
     align: center + horizon,
     repeat-header: true,
     header-rows: 2,
     rowspanx(2)[*Plucking length\ $x_1$ (m)* \ $Delta x_1 = ±0.005$m],
-    colspanx(6)[*Frequency with highest amplitude\ $f$ / $Delta f$ (Hz)*],
+    colspanx(5)[*Frequency with highest amplitude\ $f$ / $Delta f$ (Hz)*],
     [Trial 1],
     [Trial 2],
     [Trial 3],
     [Trial 4],
     [Trial 5],
-    [$Delta f$],
-    // 0.01  655.70  655.88  655.88  655.88  655.88
-    // 0.08  655.70  655.88  655.88  655.88  655.88
-    // 0.15  655.88  655.88  655.88  656.07  655.88
-    // 0.22  656.07  655.88  655.88  656.07  656.07
-    // 0.29  984.01  983.83  984.01  984.01  984.01
-    // 0.36  656.07  984.01  655.88  655.88  655.88
-    // 0.43  655.88  656.07  655.88  655.88  655.88
-    // 0.50  655.88  655.88  655.88  655.88  655.88
-    // 0.57  656.07  655.88  655.88  655.88  655.88
-    // 0.64  655.88  656.07  656.07  655.88  656.07
     [0.010],
     [655.70],
     [655.88],
     [655.88],
     [655.88],
     [655.88],
-    [#uncert(2)],
     [0.080],
     [655.70],
     [655.88],
     [655.88],
     [655.88],
     [655.88],
-    [#uncert(2)],
     [0.150],
     [655.88],
     [655.88],
     [655.88],
     [656.07],
     [655.88],
-    [#uncert(2)],
     [0.220],
     [656.07],
     [655.88],
     [655.88],
     [656.07],
     [656.07],
-    [#uncert(2)],
     [0.290],
     [984.01],
     [983.83],
     [984.01],
     [984.01],
     [984.01],
-    [#uncert(3)],
     [0.360],
     [656.07],
     [#text(fill: red, "984.01") #footnote("Outlier removed for data processing")],
     [655.88],
     [655.88],
     [655.88],
-    [#uncert(2)],
     [0.430],
     [655.88],
     [656.07],
     [655.88],
     [655.88],
     [655.88],
-    [#uncert(2)],
     [0.500],
     [655.88],
     [655.88],
     [655.88],
     [655.88],
     [655.88],
-    [#uncert(2)],
     [0.570],
     [656.07],
     [655.88],
     [655.88],
     [655.88],
     [655.88],
-    [#uncert(2)],
     [0.640],
     [655.88],
     [656.07],
     [656.07],
     [655.88],
     [656.07],
-    [#uncert(2)],
   ),
 ) <raw_data_table>
 // justification of absolute uncertainties
 // tape measure - ± whatever cm = ± whatever m
 // frequency - ± whatever % from the search window of the FFT
 
-#align(center)[#smallcaps("Qualitative Observations")]
+#align(center)[*#smallcaps("Qualitative Observations")*]
 - I observed that plucking near the ends of the string created a harsher, "tinny"
-  sound.
-- On the other hand, plucking near the middle of the string created a fuller
-  sound.
+  sound. On the other hand, plucking near the middle of the string created a
+  fuller sound.
 - This contrast is likely a result of a change in harmonic composition, where the
   harsher sound is a result of a reduced presence of mid frequencies, around 500Hz
   to 2000Hz, and the fuller sound is a result of a more balanced frequency
   spectrum.
 
-#align(center)[#smallcaps("Absolute Uncertainties")]
+#align(center)[*#smallcaps("Absolute Uncertainties")*]
 - The absolute uncertainty in the picking length $x_1$ is $Delta x_1 = ±0.005 "m"$ as
   the tape measure has a precision of $1 "cm"$.
 - The absolute uncertainty $Delta f$ in the frequency $f$ is $ Delta f = ±n times 0.05f_1 = ±n times 16.48"Hz" $
@@ -427,7 +428,7 @@ experiment's environmental impacts.
 // processed data - average frequencies across trials, for each picking length
 #figure(
   kind: table,
-  caption: "Raw data of highest amplitude harmonic frequencies at each plucking length",
+  caption: "Processed data of average highest amplitude harmonic frequencies at each plucking length",
   tablex(
     columns: 3,
     stroke: 0.5pt,
@@ -437,7 +438,7 @@ experiment's environmental impacts.
     header-rows: 2,
     [*Plucking length* \ $x_1$ (m) \ $Delta x_1 = ±0.005$m],
     [*Average frequency with highest amplitude* \ $macron(f)$ (Hz)],
-    [*Uncertainty in $macron(f)$* \ $Delta macron(f)$ (Hz)],
+    [*Uncertainty in $macron(f)$* \ $Delta f$ (Hz)],
     // 0.01  655.85  32.96
     // 0.08  655.85  32.96
     // 0.15  655.92  32.96
@@ -481,6 +482,7 @@ experiment's environmental impacts.
   ),
 ) <processed_data_table>
 
+#pagebreak()
 #align(center)[#smallcaps("Calculations")]
 // Example calculation of averaging
 // Calculation of average uncertainty
@@ -488,9 +490,9 @@ experiment's environmental impacts.
 - The average frequency with the highest amplitude $macron(f)$ was calculated by
   averaging the frequencies with the highest amplitude across trials, for each
   variation of the picking length $x_1$. For example, for $x_1 = 0.01 "m"$, the
-  average frequency $macron(f)$ is
+  average frequency $macron(f)$, rounded to match the original accuracy, is
   $ macron(f) = 1/5 sum_(n=0)^5 (f_(x_1 = 0.01, "trial" n)) \ = 1/5 (655.70 + 655.88 + 655.88 + 655.88 + 655.88) \ = 655.85 "Hz" $
-- The uncertainties are due to systematic error from the FFT process rather than
+- The uncertainties are due to systematic errors from the FFT process rather than
   random error between trials, therefore the absolute uncertainties are used as in
   @raw_data_table as opposed to $Delta macron(f) = (f_"max" - f_"min") / 2$. For
   instance, the absolute uncertainty for picking length $x_1 = 0.01$m is 32.96Hz,
@@ -501,7 +503,7 @@ experiment's environmental impacts.
 #figure(
   caption: [Graph of picking length $x_1$ against average frequency $macron(f)$],
   [
-    #image("figures/collected_data.png", width: 100%)
+    #image("figures/collected_data.png", width: 80%)
   ],
 ) <processed_data_figure>
 
@@ -520,9 +522,9 @@ the data will be compared to the theoretical simulation data.
 == Comparison with Theoretical Data
 As outlined in @model_background, the theoretical harmonic frequency with the
 highest amplitude $f_"modeled"$ was calculated for each variation of the picking
-length $x_1$. The collected data from the experiment (@processed_data) was then
-compared with the theoretical data, as shown in @comparison_data_table and
-@comparison_figure.
+length $x_1$, shown in the column. The collected data $macron(f)_"actual"$ from
+the experiment (@processed_data) was then compared with the theoretical data, as
+shown in @comparison_data_table and @comparison_figure.
 
 #figure(
   kind: table,
@@ -536,7 +538,7 @@ compared with the theoretical data, as shown in @comparison_data_table and
     header-rows: 2,
     [*Plucking length\ $x_1$ (m)* \ $Delta x_1 = ±0.005$m],
     [*Measured average frequency with highest amplitude* \ $macron(f)_"actual"$ (Hz)],
-    [*Theoretical average frequency with highest intensity* \ $f_"modeled"$ (Hz)],
+    [*Theoretical frequency with highest intensity* \ $f_"modeled"$ (Hz)],
     [*Percentage difference between $macron(f)_"actual"$ and $f_"modeled"$* \ $Delta %$],
     // 0.01  655.85  659.26  -0.52%
     // 0.08  655.85  659.26  -0.52%
@@ -595,7 +597,7 @@ compared with the theoretical data, as shown in @comparison_data_table and
 Overall, there is a low average percentage difference between the average
 frequency from the experiment and the theoretical value. The average percentage
 difference is -0.51%, an acceptable error, and is within the 5% margin of error
-from the FFT process.
+from the FFT process @mathworksWelchPowerSpectral2023.
 
 // systematic error between collected data and model data
 This percentage difference is roughly constant across variations with the
@@ -607,14 +609,20 @@ attributed to discrepancies in the tuning of the guitar string.
   caption: [Comparison between $macron(f)_"actual"$ and $f_"modeled"$ with Gaussian
     trendline],
   [
-    #image("figures/comparison.png", width: 100%)
+    #image("figures/comparison.png", width: 80%)
   ],
 ) <comparison_figure>
 
 Shown in @comparison_figure, plotting the theoretical Gaussian trendline from
-@model_background on top of the experimental data results in a Pearson
-Correlation Coefficient value of $R^2_("collected") = 0.9987$, indicating a
-strong correlation.
+@model_background on top of the experimental data results in a coefficient of
+determination of $R^2_("collected") = 0.9987$, indicating a strong "goodness of
+fit" between the trendline and the data.
+
+The coefficient of determination is a measure of how well the observed outcomes
+are replicated by the model, based on the proportion of total variation of
+outcomes explained by the model. An $R^2$ of 0.9987 means that the trendline
+accounts for 99.87% of the variance in the experimental data, indicating an
+exceptionally high level of fit between the trendline and the data points.
 
 = Conclusion
 // The hypothesis is well-supported
@@ -660,23 +668,24 @@ displacement.
 // Precise and accurate data overall, with only 1 outlier removed across all variations and trials
 // Low standard deviation in the data
 // Fractional uncertainties from measurement and averages were acceptable
-Overall, the data was generally precise and accurate. This is supported by the
-data in that there was only one outlier (colored in red in @raw_data_table),
-which was removed when taking averages. The average standard deviation between
-trials was 0.08Hz, which indicates that the data was precise. Comparing the
-collected data to the theoretical data led to a low average percentage
-difference and high correlation coefficient ($R^2$ value) with the theoretical
+Overall, the data was precise and accurate. This is supported by the data in
+that there was only one outlier (colored in red in @raw_data_table), which was
+removed when taking averages. The average standard deviation between trials was
+0.08Hz, which indicates that the data was precise. Comparing the collected data
+to the theoretical data led to a low average percentage difference of -0.51% and
+high coefficient of determination ($R^2 = 0.9987$) with the theoretical
 trendline, further indicating that the data was accurate.
 
 The methodology allowed 5 trials of data to be collected for 10 variations of
 the IV, which resulted in a relevant investigation. The control variables chosen
 were relevant and limited random error. The method of investigation, FFT
-analysis was appropriate for investigating the research question as it yielded
-more consistent data than if other less discriminatory harmonic frequency
-detection methods were used, such as a phone frequency detector application or a
-guitar tuner.
+analysis, was appropriate for investigating the research question as it yielded
+more precise data than if other less discriminatory harmonic frequency detection
+methods were used, such as a phone frequency detector application or a guitar
+tuner. The use of an automatic search algorithm to identify the frequencies as
+opposed to manual identification also increased accuracy, leading to less
+systematic and random error.
 
-#pagebreak()
 == Limitations
 // methodological issues - refer back to assumptions made in the background
 
@@ -701,17 +710,19 @@ guitar tuner.
       calculated harmonic frequencies, which results in both random and systematic
       errors in the calculated frequencies. This can be seen in the offset between the
       measured data points and the theoretical.],
-    [Low significance. As 5 trials are performed for each variation, the random error
-      is reduced, and the low standard deviation in the data suggests that this is
-      only a minor source of error. However, the systematic error is more significant,
-      as it is a source of error in the fitting of the theoretical trendline.],
+    [Low significance - as 5 trials are performed for each variation, the random
+      error is reduced, and the low standard deviation in the data suggests that this
+      is only a minor source of error. \ However, the systematic error (shown by the $-3–5 "Hz"$ offset)
+      is more significant, as it is a source of error in the fitting of the
+      theoretical trendline.],
     [The frequency search window can be reduced to reduce the random error. The
       resolution of the FFT can be increased to reduce the systematic error.],
     [The string was plucked by hand, which introduces random error in the picking
       technique. This could result in a variation in the harmonic composition of the
       string, introducing error.],
-    [Medium significance. \ The high precision in the data suggested that random
-      error was low, but this could have contributed to systematic error.],
+    [Medium significance. \ The high precision (indicated by the $R^2$ value) in the
+      data suggested that random error was low, however, this may be masked by the
+      quantization of frequencies ($n f_1$).],
     [Repeat the experiment, using a robot/mechanical plucking device to pluck the
       string with a known, consistent force.],
     [The theoretical value may not be accurate due to assumptions made, such as
@@ -730,24 +741,63 @@ guitar tuner.
 // ext 2: ?? ask chat
 // last resort = exp could be repeated with ... to reduce error (but not  relevant for me cus it's alr okay)
 
-To further explore the factors that affect tone in a guitar, other independent
-variables may be explored. For instance:
+To further explore the factors that affect tone in a guitar, other IVs may be
+explored:
 
-- The experiment could be repeated with different types of guitar strings, such as
-  nylon, copper, or steel strings, to see how each string material affects the
-  harmonic composition of the sound (the non-fundamental harmonic frequency with
-  the highest amplitude).\
-  #sym.arrow *IV*: material/type of string\
-  #sym.arrow *DV*: the non-fundamental harmonic frequency with the highest
-  amplitude
-
-- The experiment could be repeated with different types of guitar pickups, such as
-  single-coil and humbucker pickups, to see the effect of each pickup's frequency
-  response, and how it affects the harmonic composition of the sound.\
-  #sym.arrow *IV*: type of pickup (single-coil, humbucker, mix, active/passive
-  pickups, etc.)\
-  #sym.arrow *DV*: the non-fundamental harmonic frequency with the highest
-  amplitude
+#figure(
+  caption: "Possible extensions to the investigation",
+  kind: table,
+  tablex(
+    columns: (auto, 3em, auto, 3.5em, auto),
+    stroke: 0.5pt,
+    inset: 10pt,
+    align: horizon,
+    rowspanx(3)[*1*],
+    colspanx(
+      4,
+    )[The experiment could be repeated with different types of guitar strings, such as
+      nylon, copper, or steel strings, to see how each string material affects the
+      harmonic composition of the sound (the non-fundamental harmonic frequency with
+      the highest amplitude).],
+    [*IV*],
+    [material/type of string],
+    [*DV*],
+    [the non-fundamental harmonic frequency with the highest amplitude],
+    colspanx(
+      4,
+    )[Because different materials have varying densities, tensile strengths, and
+      elasticities, it can be expected that:
+      - Nylon strings, which have lower density and tension, will produce a warmer and
+        mellower sound resulting in lower frequency harmonics being more prominent.
+      - Copper-wound strings, which have higher density and tension, will produce a
+        brighter and richer sound resulting in higher frequency harmonics being more
+        prominent.
+      - Steel strings, which have the highest density and tension, will produce a bright
+        and crisp sound resulting in even higher frequency harmonics being more
+        prominent.
+    ],
+    rowspanx(3)[*2*],
+    colspanx(
+      4,
+    )[The experiment could be repeated with different types of guitar pickups, such as
+      single-coil and humbucker pickups, to see the effect of each pickup's frequency
+      response, and how it affects the harmonic composition of the sound.],
+    [*IV*],
+    [type of pickup (single-coil, humbucker, mix, active/passive pickups, etc.)],
+    [*DV*],
+    [the non-fundamental harmonic frequency with the highest amplitude],
+    colspanx(
+      4,
+    )[Because pickups impart a frequency response on the output signal, it can be
+      expected that:
+      - Single-coil pickups, which tend to accentuate higher frequencies, might result
+        in the amplification of higher frequency non-fundamental harmonics.
+      - Humbucker pickups, which are designed to reduce hum and noise, might result in a
+        lower frequency non-fundamental harmonic being the most prominent as humbuckers
+        could dampen the higher frequency harmonics to some extent.
+    ],
+  ),
+)
 
 #pagebreak()
-#bibliography("Physics IA.bib", style: "apa") <bibliography>
+#bibliography("Physics IA.bib", style: "apa", title: "References") <bibliography>
