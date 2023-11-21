@@ -152,7 +152,7 @@ with a peak around the middle of the fretboard ($x_1 = L/2$).
 = Methodology
 == Variables <variables>
 
-*Independant Variable* \
+*Independent Variable* \
 Picking length $x_1$ (m), the distance in meters from the nut where the string
 is plucked/disturbed
 - $x_1$ = {0.01m, 0.08m, 0.15m, 0.22m, 0.29m, 0.36m, 0.43m, 0.50m, 0.57m, 0.64m}
@@ -163,7 +163,7 @@ is plucked/disturbed
 - The IV is varied by plucking at the picking length as indicated by a tape
   measure.
 
-*Dependant Variable* \
+*Dependent Variable* \
 Frequency $f$ of the non-fundamental harmonic with the highest amplitude (Hz)
 - Measured by recording the frequency $f_n$ of the $n$th harmonic that has the
   highest amplitude through FFT (Fast Fourier Transform) analysis, where $n=2...10$.
